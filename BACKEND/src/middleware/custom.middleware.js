@@ -10,10 +10,10 @@ const app = express();
 const whitelist = ["http://localhost:5173", "http://localhost:5174"];
 
 app.use(cookieParser());
-app.use(cors({
-  origin: 'http://localhost:5173' ,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173' ,
+//   credentials: true
+// }));
 
 
 //ex : scheme://hostname:port
@@ -28,18 +28,18 @@ app.use(cors({
 
 
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {   // origin containe a request url // callback(error, result)
-//       if (whitelist.indexOf(origin) !== 1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not Allowed bt CORS"));
-//       }
-//     },
-//     credentials: true
-//   })
-// );
+app.use(
+  cors({
+    origin: function (origin, callback) {   // origin containe a request url // callback(error, result)
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not Allowed bt CORS"));
+      }
+    },
+    credentials: true
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
